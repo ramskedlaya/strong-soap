@@ -22,6 +22,7 @@ class Client extends Base {
     this.xmlHandler = new XMLHandler(options);
     this._initializeServices(endpoint);
     this.httpClient = options.httpClient || new HttpClient(options);
+    this.clientOptions = options;
   }
 
   setEndpoint(endpoint) {
@@ -176,7 +177,8 @@ class Client extends Base {
 
     var nsContext = this.createNamespaceContext(soapNsPrefix, soapNsURI);
     var xmlHandler = this.xmlHandler || new XMLHandler(options);
-    var extraNSs = options.extraNSsInEnvelope || {};
+    var extraNSs = this.clientOptions.extraNSsInEnvelope || {};
+    console.log("Extra NS", extraNSs);
     var envelope = Client.createSOAPEnvelope(soapNsPrefix, soapNsURI, extraNSs);
 
     var soapHeaderElement = envelope.header;
