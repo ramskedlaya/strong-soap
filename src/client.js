@@ -176,7 +176,8 @@ class Client extends Base {
 
     var nsContext = this.createNamespaceContext(soapNsPrefix, soapNsURI);
     var xmlHandler = this.xmlHandler || new XMLHandler(options);
-    var envelope = Client.createSOAPEnvelope(soapNsPrefix, soapNsURI);
+    var extraNSs = options.extraNSsInEnvelope || {};
+    var envelope = Client.createSOAPEnvelope(soapNsPrefix, soapNsURI, extraNSs);
 
     var soapHeaderElement = envelope.header;
     var soapBodyElement = envelope.body;

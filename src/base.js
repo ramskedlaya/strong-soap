@@ -63,12 +63,17 @@ class Base extends EventEmitter {
     this.wsdl.options.forceSoapVersion = options.forceSoapVersion;
   }
 
-  static createSOAPEnvelope(prefix, nsURI) {
+  static createSOAPEnvelope(prefix, nsURI, extraNSs) {
     prefix = prefix || 'soap';
     nsURI = nsURI || 'http://schemas.xmlsoap.org/soap/envelope/';
     var doc = xmlBuilder.create(prefix + ':Envelope',
       {version: '1.0', encoding: 'UTF-8', standalone: true});
     doc.attribute('xmlns:' + prefix, nsURI);
+
+    for(var key in extraNSs) {
+      doc.attribute('xmlns:' + key, extraNSs[key]);
+    }
+
     let header = doc.element(prefix + ':Header');
     let body = doc.element(prefix + ':Body');
     return {
